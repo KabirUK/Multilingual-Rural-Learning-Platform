@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rural Learning Portal - Register</title>
+<script src="js/app.js" defer></script>
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to bottom right, #f0f9ff, #e0f2fe);
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    padding: 48px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 30px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group input,
+.input-group select {
+    width: 100%;
+    height: 48px;
+    padding: 0 14px;
+    border-radius: 12px;
+    border: 1px solid #d1d5db;
+    font-size: 14px;
+    transition: 0.2s ease;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+button {
+    width: 100%;
+    height: 48px;
+    border: none;
+    border-radius: 12px;
+    background: black;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.login-link a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+#message {
+    margin-top: 15px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Rural Learning Portal</h1>
+    <p class="subtitle">Create a new account</p>
+
+    <div class="input-group">
+        <input type="text" id="name" placeholder="Full Name" required>
+    </div>
+
+    <div class="input-group">
+        <input type="email" id="email" placeholder="Email" required>
+    </div>
+
+    <div class="input-group">
+        <input type="password" id="password" placeholder="Password" required>
+    </div>
+
+    <div class="input-group">
+        <select id="role" required>
+            <option value="">Select Role</option>
+            <option value="STUDENT">Student</option>
+            <option value="TEACHER">Teacher</option>
+        </select>
+    </div>
+
+    <button onclick="registerWithBackend()">Register</button>
+
+    <div id="message"></div>
+
+    <div class="login-link">
+        Already have an account? <a href="login.html">Login here</a>
+    </div>
+
+</div>
+
+<script>
+function registerWithBackend() {
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const role = document.getElementById('role').value;
+    const msg = document.getElementById('message');
+
+    if (!name || !email || !password || !role) {
+        msg.innerText = "Please fill all fields!";
+        msg.style.color = "red";
+        return;
+    }
+
+    fetch("http://localhost:8080/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password, role })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "success") {
+            msg.innerText = data.message;
+            msg.style.color = "green";
+            // Clear input fields
+            document.getElementById('name').value = "";
+            document.getElementById('email').value = "";
+            document.getElementById('password').value = "";
+            document.getElementById('role').value = "";
+            // Optional: redirect to login after 2 seconds
+            setTimeout(() => {
+                window.location.href = "login.html";
+            }, 2000);
+        } else {
+            msg.innerText = data.message;
+            msg.style.color = "red";
+        }
+    })
+    .catch(error => {
+        console.error("Register Error:", error);
+        msg.innerText = "Server not reachable!";
+        msg.style.color = "red";
+    });
+}
+</script>
+
+</body>
+</html>

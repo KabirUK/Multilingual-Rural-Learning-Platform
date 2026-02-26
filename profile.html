@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body onload="loadProfile()">
+
+<div class="ribbon">🌾 Multilingual Rural Learning Portal</div>
+
+<div class="layout">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <a href="home.html">🏠 Home</a>
+        <a href="profile.html">👤 Profile</a>
+        <a href="#" onclick="logout()">🚪 Logout</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <h2 id="profileHeading"></h2>
+
+        <div class="profile-box">
+            <img src="https://i.pravatar.cc/150" class="profile-pic">
+            <h3 id="profileName"></h3>
+            <p id="profileRole"></p>
+        </div>
+
+        <div class="dashboard-box">
+            <h3>Learning Dashboard</h3>
+            <p>Courses Completed: 1</p>
+            <p>Overall Progress: 40%</p>
+        </div>
+
+        <div class="details-box">
+            <h3>Other Details</h3>
+            <p id="gradeInfo"></p>
+            <p>School: Rural Public School</p>
+        </div>
+
+    </div>
+</div>
+
+<script>
+function loadProfile() {
+
+    const userName = localStorage.getItem("userName");
+    const userRole = localStorage.getItem("userRole");
+
+    // If not logged in → redirect
+    if (!userName) {
+        alert("Please login first!");
+        window.location.href = "login.html";
+        return;
+    }
+
+    // Set heading dynamically
+    document.getElementById("profileHeading").innerText =
+        userRole + " Profile";
+
+    document.getElementById("profileName").innerText = userName;
+    document.getElementById("profileRole").innerText = "Role: " + userRole;
+
+    // Example: show grade only for students
+    if (userRole === "STUDENT") {
+        document.getElementById("gradeInfo").innerText = "Grade: 9";
+    } else {
+        document.getElementById("gradeInfo").innerText = "Subject: Science";
+    }
+}
+
+function logout() {
+    localStorage.clear();
+    window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>

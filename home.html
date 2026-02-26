@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rural Learning Portal</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body onload="loadHome()">
+
+<!-- Top Navigation -->
+<div class="top-nav">
+    <div class="logo">🌾 Rural Learning Portal</div>
+
+    <div class="search-bar">
+        <input type="text" placeholder="Search for courses...">
+    </div>
+
+    <div class="nav-links">
+        <span>My Learning</span>
+        <span onclick="window.location.href='profile.html'">Profile</span>
+        <span onclick="logout()" style="cursor:pointer;">Logout</span>
+    </div>
+</div>
+
+<div class="layout">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h3 id="studentDisplay"></h3>
+        <a href="home.html">🏠 Home</a>
+        <a href="profile.html">👤 Profile</a>
+        <a href="#" onclick="logout()">🚪 Logout</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <!-- Hero Section -->
+        <div class="hero">
+            <div class="hero-text">
+                <h2>Empowering Rural Education</h2>
+                <p>AI powered multilingual learning for every student.</p>
+                <button onclick="openCourse()">Start Learning</button>
+            </div>
+
+            <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e">
+        </div>
+
+        <!-- Continue Learning -->
+        <div class="section-title">Continue Learning</div>
+
+        <div class="course-grid">
+
+            <div class="course-card" onclick="openCourse()">
+                <img src="https://img.icons8.com/color/96/science.png">
+                <h4>Basic Science</h4>
+                <p>Photosynthesis Chapter</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width:40%"></div>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <img src="https://img.icons8.com/color/96/math.png">
+                <h4>Mathematics</h4>
+                <p>Algebra Basics</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width:20%"></div>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <img src="https://img.icons8.com/color/96/language.png">
+                <h4>English</h4>
+                <p>Grammar Fundamentals</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width:60%"></div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<script src="js/app.js"></script>
+
+</body>
+</html>
